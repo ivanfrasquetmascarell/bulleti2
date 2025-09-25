@@ -15,7 +15,7 @@ public class Hashmap {
     }
 
     /**
-     * añade un valor enlazado a una key string a las listas
+     * mete un valor enlazado a una key string a las listas
      * @param Key
      * @param Value
      */
