@@ -19,7 +19,7 @@ public class Hashmap {
      * @param Key
      * @param Value
      */
-    public void add(String Key, Object Value) {
+    public void añadir(String Key, Object Value) {
         keys.add(pos, Key);
         values.add(pos, Value);
         pos++;
@@ -30,7 +30,7 @@ public class Hashmap {
      * @param key
      * @return valor2 o null
      */
-    public Object getvalue(String key) {
+    public Object getvalor(String key) {
         int cont = 0;
         for (String i : keys) {
             if (key.equals(i)) {
