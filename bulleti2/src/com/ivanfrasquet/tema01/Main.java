@@ -10,7 +10,7 @@ public class Main {
         System.out.println();
 
         Hashmap hm = new Hashmap("llave", 43);
-        System.out.println(hm.getvalue("llave"));
+        System.out.println(hm.getvalor("llave"));
 
     }
 }
