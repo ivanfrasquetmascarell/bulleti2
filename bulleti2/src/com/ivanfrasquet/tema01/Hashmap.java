@@ -1,6 +1,7 @@
 package com.ivanfrasquet.tema01;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Hashmap {
     private ArrayList<String> keys = new ArrayList<String>();
@@ -12,17 +13,22 @@ public class Hashmap {
         keys.add(0, Key);
         values.add(0, Value);
         pos++;
+
     }
+
+
 
     /**
      * añade un valor enlazado a una key string a las listas
      * @param Key
      * @param Value
      */
+
     public void add(String Key, Object Value) {
         keys.add(pos, Key);
         values.add(pos, Value);
         pos++;
+
     }
 
     /**
@@ -40,5 +46,10 @@ public class Hashmap {
             cont++;
         }
         return null;
+
+
+    }
+    public int hashCode() {
+        return Objects.hash(values);
     }
 }

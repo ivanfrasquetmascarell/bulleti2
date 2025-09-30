@@ -1,10 +1,11 @@
 package com.ivanfrasquet.tema01;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
         System.out.println();
         System.out.println("Hashmap");
         System.out.println();
@@ -13,10 +14,10 @@ public class Main {
         System.out.println(hm.getvalue("llave"));
 
         System.out.println();
-        System.out.println("Act1");
+        System.out.println("Act3");
         System.out.println();
 
-        Act1 a1 = new Act1 ("ficheros", "DNIs.txt");
-        a1.creararxiu();
+        Act2 a2 = new Act2("bulleti2/ficheros");
+
     }
 }
