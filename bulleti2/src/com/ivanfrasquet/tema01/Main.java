@@ -2,7 +2,6 @@ package com.ivanfrasquet.tema01;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
 
 public class Main {
     public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
@@ -17,7 +16,7 @@ public class Main {
         System.out.println("Act3");
         System.out.println();
 
-        Act2 a2 = new Act2("bulleti2/ficheros");
+        Act3 a3 = new Act3("bulleti2/ficheros");
 
     }
 }

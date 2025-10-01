@@ -1,25 +1,37 @@
 package com.ivanfrasquet.tema01;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Base64;
-import java.util.Scanner;
 
-public class Act2 {
+public class Act3 {
     private final File file;
     private String Directorio;
     private byte[] password;
     private byte[] encriptado;
     private final MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
 
-    public Act2(String Directorio) throws IOException, NoSuchAlgorithmException {
+    public Act3(String Directorio) throws IOException, NoSuchAlgorithmException {
         this.Directorio = Directorio;
         file = new File(Directorio + "/" + "properties.txt");
 
         if (!file.exists()) {
+            file.createNewFile();
+            password = "S3cret@".getBytes();
+            messageDigest.update(password);
+            encriptado = messageDigest.digest();
+            FileWriter fw = new FileWriter(file);
+            BufferedWriter bw = new BufferedWriter(fw);
+            try {
+                bw.write(Base64.getEncoder().encodeToString(encriptado));
+            } finally {
+                bw.close();
+                fw.close();
+            }
+        } else {
+            file.delete();
             file.createNewFile();
             password = "S3cret@".getBytes();
             messageDigest.update(password);
