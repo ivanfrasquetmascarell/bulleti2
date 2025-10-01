@@ -32,20 +32,6 @@ public class Act2 {
                 bw.close();
                 fw.close();
             }
-        } else {
-            file.delete();
-            file.createNewFile();
-            password = "S3cret@".getBytes();
-            messageDigest.update(password);
-            encriptado = messageDigest.digest();
-            FileWriter fw = new FileWriter(file);
-            BufferedWriter bw = new BufferedWriter(fw);
-            try {
-                bw.write(Base64.getEncoder().encodeToString(encriptado));
-            } finally {
-                bw.close();
-                fw.close();
-            }
         }
         int opcion;
         do {
