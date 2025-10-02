@@ -9,8 +9,10 @@ public class Main {
         System.out.println("Hashmap");
         System.out.println();
 
-        Hashmap hm = new Hashmap("llave", 43);
-        System.out.println(hm.getvalue("llave"));
+        MyHashMap hashMap = new MyHashMap(10);
+        hashMap.put("ivan", 16);
+        System.out.println(hashMap.get("ivan"));
+
 
         System.out.println();
         System.out.println("Act3");
