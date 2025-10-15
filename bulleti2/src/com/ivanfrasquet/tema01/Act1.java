@@ -1,7 +1,6 @@
 package com.ivanfrasquet.tema01;
 
 import java.io.*;
-import java.util.Scanner;
 
 public class Act1 {
     private File file;

@@ -5,18 +5,19 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.Properties;
 
 public class Act3 {
     private final File file;
-    private String Directorio;
+    private final Properties properties;
+    private final String directorio;
     private byte[] password;
     private byte[] encriptado;
     private final MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
-
-    public Act3(String Directorio) throws IOException, NoSuchAlgorithmException {
-        this.Directorio = Directorio;
-        file = new File(Directorio + "/" + "properties.txt");
-
+    public Act3(String directorio) throws IOException, NoSuchAlgorithmException {
+        this.directorio = directorio;
+        properties = new Properties();
+        file = new File(directorio + "/config.properties");
         if (!file.exists()) {
             file.createNewFile();
             password = "S3cret@".getBytes();
@@ -24,39 +25,46 @@ public class Act3 {
             encriptado = messageDigest.digest();
             FileWriter fw = new FileWriter(file);
             BufferedWriter bw = new BufferedWriter(fw);
+            properties.setProperty("passwd", Base64.getEncoder().encodeToString(encriptado));
             try {
-                bw.write(Base64.getEncoder().encodeToString(encriptado));
+                properties.store(bw, "");
             } finally {
                 bw.close();
                 fw.close();
+            }
+        } else {
+            FileReader fr = new FileReader(file);
+            BufferedReader br = new BufferedReader(fr);
+            try {
+                properties.load(br);
+            } finally {
+                br.close();
+                fr.close();
             }
         }
         int opcion;
         do {
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-                System.out.println("*************************");
-                System.out.println("1- Validar Acceso");
-                System.out.println("*************************");
-                opcion = Integer.parseInt(br.readLine());
-                if (opcion == 1) {
-                    System.out.println("Escribe tu contraseña");
-                    byte[] password2 = br.readLine().getBytes();
-                    if (!validar(password2)) {
-                        System.out.println("Contraseña incorrecta");
-                        opcion = 0;
-                    } else menu();
-                }
-
+            System.out.println("*****************");
+            System.out.println("1. Validar Acceso");
+            System.out.println("*****************");
+            opcion = Integer.parseInt(br.readLine());
+            if (opcion == 1) {
+                System.out.println("Escribe la contraseña");
+                byte[] password2 = br.readLine().getBytes();
+                if(!validar(password2)) {
+                    System.out.println("Contraseña incorrecta");
+                    opcion = 0;
+                } else menu();
+            }
         } while (opcion != 1);
     }
-
-
-    public File getFile() {
+    public File getFile(){
         return file;
     }
 
     /**
-     * Comprueba que la contraseña recivida sea igual que la del fichero
+     * Valida que la contraseña escrita sea la misma que la del fichero
      * @param password2
      * @return
      * @throws IOException
@@ -79,26 +87,26 @@ public class Act3 {
     }
 
     /**
-     * Ejecuta el menu
+     * Lanza el menu
      * @throws IOException
      */
     public void menu() throws IOException {
         int opcion;
         do {
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-                System.out.println("*************************");
-                System.out.println("1- Modificar Contraseña");
-                System.out.println("2- Salir");
-                System.out.println("*************************");
-                opcion = Integer.parseInt(br.readLine());
-                if (opcion == 1) {
-                    System.out.println("Escribe tu contraseña");
-                    byte[] password2 = br.readLine().getBytes();
-                    if (!validar(password2)) {
-                        System.out.println("Contraseña incorrecta");
-                        opcion = 0;
-                    } else cambiarPassword();
-                }
+            System.out.println("*****************");
+            System.out.println("1. Modificar contraseña");
+            System.out.println("2. Salir");
+            System.out.println("*****************");
+            opcion = Integer.parseInt(br.readLine());
+            if (opcion == 1) {
+                System.out.println("Escribe la contraseña");
+                byte[] password2 = br.readLine().getBytes();
+                if(!validar(password2)) {
+                    System.out.println("Contraseña incorrecta");
+                    opcion = 0;
+                } else cambiarPassword();
+            }
         } while (opcion != 2);
     }
 
@@ -106,30 +114,31 @@ public class Act3 {
      * Cambia la contraseña del fichero
      * @throws IOException
      */
-        public void cambiarPassword() throws IOException {
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            System.out.println("Escribe tu nueva contraseña");
-            String Contrasenya = br.readLine();
-            String regex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[^a-zA-Z0-9]).{8,}$";
-            if(Contrasenya.matches(regex)) {
-                file.delete();
-                file.createNewFile();
-                password = Contrasenya.getBytes();
-                messageDigest.update(password);
-                encriptado = messageDigest.digest();
-                FileWriter fw = new FileWriter(file);
-                BufferedWriter bw = new BufferedWriter(fw);
-                try {
-                    bw.write(Base64.getEncoder().encodeToString(encriptado));
-                } finally{
-                    bw.close();
-                    fw.close();
-                }
-            } else {
-                System.out.println("La contraseña no cumple los requisitos");
-                System.out.println();
-                cambiarPassword();
+    public void cambiarPassword() throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Escribe la nueva contraseña");
+        String contrasenya = br.readLine();
+        String regex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[^a-zA-Z0-9]).{8,}$";
+        if (contrasenya.matches(regex)) {
+            file.delete();
+            file.createNewFile();
+            password = contrasenya.getBytes();
+            messageDigest.update(password);
+            encriptado = messageDigest.digest();
+            FileWriter fw = new FileWriter(file);
+            BufferedWriter bw = new BufferedWriter(fw);
+            try {
+                bw.write(Base64.getEncoder().encodeToString(encriptado));
+            } finally {
+                bw.close();
+                fw.close();
             }
+        } else {
+            System.out.println("La contraseña no cumple los requisitos");
+            System.out.println();
+            cambiarPassword();
         }
 
+    }
 }
+

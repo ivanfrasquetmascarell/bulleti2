@@ -90,14 +90,14 @@ public class MyHashMap<K, V> {
                     return null;
                 }
                 if (node.getKey().equals(key)) {
-                    position = data[column][i];
-                    if(i != (data[column].length - 1)){
-                        if (data[column][i + 1] != null) {
-                            data[column][i] = data[column][i + 1];
-                        } else {
-                            data[column][i] = null;
-                        }
-                    } else data[column][i] = null;
+                        position = data[column][i];
+                        if(i != (data[column].length - 1)){
+                            if (data[column][i + 1] != null) {
+                                data[column][i] = data[column][i + 1];
+                            } else {
+                                data[column][i] = null;
+                            }
+                        } else data[column][i] = null;
 
                 }
             }
